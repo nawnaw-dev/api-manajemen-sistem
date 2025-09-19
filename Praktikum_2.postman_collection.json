@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "5da8e629-6c23-4f19-af11-033115337f7f",
+		"name": "Praktikum_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48009039",
+		"_collection_link": "https://nauranaw-3351483.postman.co/workspace/naura_ulfatin's-Workspace~5126497f-122f-4944-86fa-85963f8ee8bf/collection/48009039-5da8e629-6c23-4f19-af11-033115337f7f?action=share&source=collection_link&creator=48009039"
+	},
+	"item": [
+		{
+			"name": "\nhttp://localhost:3200/movies",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"tittle\": \"Harry Potter\",\r\n  \"director\": \"Chris Columbus\",\r\n  \"year\": \"2001\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3200/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3200/directors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nama\": \"Naura Ulfatin\",\r\n  \"birthYear\": 2006\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3200/directors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"directors"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
