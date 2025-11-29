@@ -34,6 +34,30 @@ const db = new sqlite3.Database(DB_SOURCE, (err) => {
                 }
             });
         });
+
+        db.run(`CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'user'
+        )`, (err) => {
+            if (err) {
+                console.error("Gagal membuat tabel users:", err.message);
+            }
+    });
+
+
+        db.run(`CREATE TABLE IF NOT EXISTS directors (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            birth_year INTEGER
+        )`, (err) => {
+            if (err) {
+                console.error("Gagal membuat tabel directors:", err.message);
+            } else {
+                console.log("Tabel directors siap digunakan.");
+            }
+        });  
     }
 });
 
