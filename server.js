@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const authenticateToken = require('./middleware/auth.js');
+const { authenticateToken, authorizeRole} = require('./middleware/auth.js');
 
 const app = express();
 const port = process.env.PORT || 3500;
@@ -40,7 +40,7 @@ app.post('/movies', authenticateToken, (req, res) => {
     });
 });
 
-app.put('/movies/:id', authenticateToken, (req, res) => {
+app.put('/movies/:id', [authenticateToken, authorizeRole('admin')], (req, res) => {
     const { title, director, year } = req.body;
     const { id } = req.params;
     const sql = 'UPDATE movies SET title = ?, director = ?, year = ? WHERE id = ?';
@@ -50,7 +50,7 @@ app.put('/movies/:id', authenticateToken, (req, res) => {
     });
 });
 
-app.delete('/movies/:id', authenticateToken, (req, res) => {
+app.delete('/movies/:id', [authenticateToken, authorizeRole('admin')], (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM movies WHERE id = ?';
     db.run(sql, id, function(err) {
@@ -71,7 +71,7 @@ app.post('/auth/register', (req, res) => {
             return res.status(500).json({ error: 'Gagal memproses pendaftaran'});
         }
 
-        const sql = 'INSERT INTO users (username, password, role) VALUES (?, ?)';
+        const sql = 'INSERT INTO users (username, password, role) VALUES (?, ?, ?)';
         const params = [username.toLowerCase(), hashedPassword, 'user'];
         db.run(sql, params, function(err) {
             if (err) {
@@ -81,10 +81,19 @@ app.post('/auth/register', (req, res) => {
                 console.error("Error inserting user:", err);
                 return res.status(500).json({error: 'Gagal menyimpan pengguna'});
             }
+            console.log("User berhasil disimpan dengan ID:", this.lastID);
             res.status(201).json({message: 'Registrasi berhasil', userId: this.lastID});
         });
     });
 });
+
+app.get('/debug/users', (req, res) => {
+  db.all("SELECT * FROM users", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
 
 app.post('/auth/register-admin', (req, res) => {
   const { username, password } = req.body;
@@ -145,40 +154,58 @@ app.post('/auth/login', (req, res) => {
     });
 });
 
+// GET semua directors (publik)
 app.get('/directors', (req, res) => {
-    const sql = "SELECT * FROM directors ORDER BY id ASC";
-    db.all(sql, [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
+  const sql = 'SELECT * FROM directors';
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
 });
 
+// GET director by id (publik)
+app.get('/directors/:id', (req, res) => {
+  const sql = 'SELECT * FROM directors WHERE id = ?';
+  const params = [req.params.id];
+  db.get(sql, params, (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ error: 'Director tidak ditemukan' });
+    res.json(row);
+  });
+});
+
+// POST director (hanya user login, role apapun)
 app.post('/directors', authenticateToken, (req, res) => {
-    const { name, birth_year } = req.body;
-    const sql = "INSERT INTO directors (name, birth_year) VALUES (?, ?)";
-    db.run(sql, [name, birth_year], function(err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.status(201).json({ message: "Director berhasil ditambahkan", directorId: this.lastID });
-    });
+  const { name, birth_year } = req.body;
+  const sql = 'INSERT INTO directors (name, birth_year) VALUES (?, ?)';
+  const params = [name, birth_year];
+  db.run(sql, params, function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: 'Director berhasil ditambahkan', directorId: this.lastID });
+  });
 });
 
-app.put('/directors/:id', authenticateToken, (req, res) => {
-    const { name, birth_year } = req.body;
-    const { id } = req.params;
-    const sql = "UPDATE directors SET name = ?, birth_year = ? WHERE id = ?";
-    db.run(sql, [name, birth_year, id], function(err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ message: "Director berhasil diperbarui" });
-    });
+// PUT director (hanya admin)
+app.put('/directors/:id', [authenticateToken, authorizeRole('admin')], (req, res) => {
+  const { name, birth_year } = req.body;
+  const sql = 'UPDATE directors SET name = ?, birth_year = ? WHERE id = ?';
+  const params = [name, birth_year, req.params.id];
+  db.run(sql, params, function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) return res.status(404).json({ error: 'Director tidak ditemukan' });
+    res.json({ message: 'Director berhasil diupdate' });
+  });
 });
 
-app.delete('/directors/:id', authenticateToken, (req, res) => {
-    const { id } = req.params;
-    const sql = "DELETE FROM directors WHERE id = ?";
-    db.run(sql, id, function(err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ message: "Director berhasil dihapus" });
-    });
+// DELETE director (hanya admin)
+app.delete('/directors/:id', [authenticateToken, authorizeRole('admin')], (req, res) => {
+  const sql = 'DELETE FROM directors WHERE id = ?';
+  const params = [req.params.id];
+  db.run(sql, params, function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) return res.status(404).json({ error: 'Director tidak ditemukan' });
+    res.sendStatus(204);
+  });
 });
 
 app.listen(port, () => {
