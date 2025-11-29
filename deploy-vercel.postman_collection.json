@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "7897f441-702e-472a-9320-3440d34c12c2",
+		"name": "deploy-vercel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48009039",
+		"_collection_link": "https://nauranaw-3351483.postman.co/workspace/naura_ulfatin's-Workspace~5126497f-122f-4944-86fa-85963f8ee8bf/collection/48009039-7897f441-702e-472a-9320-3440d34c12c2?action=share&source=collection_link&creator=48009039"
+	},
+	"item": [
+		{
+			"name": "register-user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"nawra\",\r\n  \"password\": \"haihai123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/auth/register",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login-user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"pak sepyan\",\r\n  \"password\": \"haihai123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/auth/login",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register-adm",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"haihai123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/auth/register-admin",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"auth",
+						"register-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login-adm",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"haihai123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/auth/login",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-directors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc2NDQxNjA4NywiZXhwIjoxNzY0NDE5Njg3fQ.A2KAkcy-EAYAU6m0k8me6eR2TT_u7lunDIkPrX0jJTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Nadya Ulfatin\",\"birthYear\": 2006 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/directors",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"directors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-id-directors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/directors/2",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"directors",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-directors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc2NDQxNjA4NywiZXhwIjoxNzY0NDE5Njg3fQ.A2KAkcy-EAYAU6m0k8me6eR2TT_u7lunDIkPrX0jJTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Naura Ulfatin\", \"birthYear\": 2006 }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/directors/2",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"directors",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-directors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc2NDQxNjA4NywiZXhwIjoxNzY0NDE5Njg3fQ.A2KAkcy-EAYAU6m0k8me6eR2TT_u7lunDIkPrX0jJTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n"
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/directors/2",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"directors",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-movies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc2NDQxNjA4NywiZXhwIjoxNzY0NDE5Njg3fQ.A2KAkcy-EAYAU6m0k8me6eR2TT_u7lunDIkPrX0jJTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"title\": \"Poliwangi Maju\", \"director_id\": 3, \"year\": 2025 }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/movies",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc2NDQxNjA4NywiZXhwIjoxNzY0NDE5Njg3fQ.A2KAkcy-EAYAU6m0k8me6eR2TT_u7lunDIkPrX0jJTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-manajemen-sistem.vercel.app/movies",
+					"protocol": "https",
+					"host": [
+						"api-manajemen-sistem",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
